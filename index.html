@@ -1,272 +1,1539 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Prazos | Madville GMAD</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #216736;
-            --primary-hover: #1a532b;
-            --accent: #e85e24;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-            --text: #1e293b;
-            --border: #e2e8f0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOMINUS AI — Infraestrutura Inteligente para Perícia Trabalhista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Centralização Absoluta */
-        * { box-sizing: border-box; }
-        html, body { height: 100%; margin: 0; }
-        
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: var(--text);
-        }
+:root {
+  --navy: #080C14;
+  --navy-2: #0D1420;
+  --navy-3: #121B2E;
+  --navy-4: #1A2540;
+  --navy-5: #243055;
+  --gold: #B8965A;
+  --gold-light: #D4AF7A;
+  --gold-dim: #8A6E3E;
+  --blue-accent: #2563EB;
+  --blue-glow: #3B82F6;
+  --white: #FAFAF8;
+  --off-white: #E8E6E0;
+  --gray-1: #9DA3B0;
+  --gray-2: #6B7280;
+  --gray-3: #374151;
+  --border: rgba(184, 150, 90, 0.15);
+  --border-subtle: rgba(255,255,255,0.06);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
 
-        .card {
-            background: var(--white);
-            width: 100%;
-            max-width: 420px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            animation: fadeIn 0.5s ease-out;
-        }
+html { scroll-behavior: smooth; }
 
-        .header {
-            padding: 40px 30px 20px;
-            text-align: center;
-        }
+body {
+  background: var(--navy);
+  color: var(--off-white);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-        /* Logo embutida via CSS para nunca falhar */
-        .logo {
-            width: 220px;
-            height: 60px;
-            margin: 0 auto 15px;
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oe_y6j4Hemmedaxw8e-b9RNFtEiWKVxP_g&s');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
 
-        .header h2 {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 0;
-            letter-spacing: -0.5px;
-        }
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(8, 12, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid var(--border-subtle);
+}
 
-        .tabs {
-            display: flex;
-            margin: 10px 30px 25px;
-            background: #f1f5f9;
-            padding: 5px;
-            border-radius: 14px;
-        }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
 
-        .tab-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            background: transparent;
-            font-family: inherit;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: #64748b;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: 0.2s;
-        }
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--navy);
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
 
-        .tab-btn.active {
-            background: var(--white);
-            color: var(--primary);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-        }
+.logo-text {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+}
 
-        .form { padding: 0 30px 35px; }
-        .group { margin-bottom: 18px; }
+.logo-text span {
+  color: var(--gold);
+}
 
-        label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #475569;
-            text-transform: uppercase;
-        }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
 
-        input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: inherit;
-            outline: none;
-            transition: 0.2s;
-        }
+.nav-links a {
+  color: var(--gray-1);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.2s;
+}
 
-        input:focus { border-color: var(--primary); background: #f0fdf4; }
+.nav-links a:hover { color: var(--off-white); }
 
-        .btn-main {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 8px 15px rgba(33, 103, 54, 0.2);
-        }
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-        .btn-main:hover { transform: translateY(-2px); background: var(--primary-hover); }
+.btn-ghost {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-1);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+}
 
-        #result-area {
-            margin-top: 25px;
-            padding: 20px;
-            background: #fff7f3;
-            border-radius: 18px;
-            border: 1px solid #ffe4d6;
-            display: none;
-            text-align: center;
-        }
+.btn-ghost:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.05);
+}
 
-        .res-val {
-            display: block;
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--accent);
-            margin: 5px 0 12px;
-        }
+.btn-primary {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border: none;
+  cursor: pointer;
+  padding: 9px 22px;
+  border-radius: 8px;
+  transition: opacity 0.2s, transform 0.1s;
+  text-decoration: none;
+  display: inline-block;
+}
 
-        .btn-copy {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
 
-        .footer {
-            text-align: center;
-            font-size: 0.7rem;
-            color: #94a3b8;
-            padding-bottom: 25px;
-        }
+/* HERO */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 48px 80px;
+  overflow: hidden;
+}
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+.hero-glow {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-glow-gold {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse at center, rgba(184, 150, 90, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(184, 150, 90, 0.08);
+  border: 0.5px solid rgba(184, 150, 90, 0.3);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gold-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  max-width: 900px;
+  margin: 0 auto 12px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--gray-1);
+  max-width: 580px;
+  margin: 0 auto 48px;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 72px;
+}
+
+.btn-primary-lg {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border: none;
+  cursor: pointer;
+  padding: 14px 32px;
+  border-radius: 10px;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 0 0 rgba(184,150,90,0);
+}
+
+.btn-primary-lg:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(184,150,90,0.25);
+}
+
+.btn-outline-lg {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--off-white);
+  background: transparent;
+  border: 0.5px solid rgba(255,255,255,0.15);
+  cursor: pointer;
+  padding: 14px 32px;
+  border-radius: 10px;
+  transition: background 0.2s, border-color 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline-lg:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.25);
+}
+
+/* Dashboard preview */
+.hero-preview {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.preview-frame {
+  background: var(--navy-2);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 0.5px rgba(184,150,90,0.1),
+    0 40px 120px rgba(0,0,0,0.6),
+    0 0 80px rgba(37,99,235,0.05);
+}
+
+.preview-topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border-bottom: 0.5px solid var(--border-subtle);
+  background: var(--navy-3);
+}
+
+.preview-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.pd-red { background: #FF5F57; }
+.pd-yellow { background: #FEBC2E; }
+.pd-green { background: #28C840; }
+
+.preview-url {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: var(--gray-2);
+  font-family: 'DM Sans', monospace;
+}
+
+.preview-body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 420px;
+}
+
+.preview-sidebar {
+  border-right: 0.5px solid var(--border-subtle);
+  padding: 20px 0;
+  background: var(--navy-2);
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px 24px;
+  border-bottom: 0.5px solid var(--border-subtle);
+  margin-bottom: 16px;
+}
+
+.sidebar-logo-mark {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--navy);
+}
+
+.sidebar-logo-text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.sidebar-logo-text span { color: var(--gold); }
+
+.sidebar-section {
+  padding: 0 12px;
+  margin-bottom: 4px;
+}
+
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-3);
+  padding: 0 8px;
+  margin-bottom: 4px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--gray-1);
+  margin-bottom: 1px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--off-white); }
+
+.sidebar-item.active {
+  background: rgba(184,150,90,0.1);
+  color: var(--gold-light);
+}
+
+.sidebar-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.preview-main {
+  padding: 24px;
+  background: var(--navy);
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.preview-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.preview-title span {
+  font-size: 12px;
+  color: var(--gray-2);
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.preview-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--navy-2);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--gray-2);
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+  font-family: var(--serif);
+}
+
+.stat-delta {
+  font-size: 11px;
+  color: #34D399;
+}
+
+.preview-table {
+  background: var(--navy-2);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid var(--border-subtle);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-2);
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 11px 16px;
+  border-bottom: 0.5px solid var(--border-subtle);
+  font-size: 12px;
+  color: var(--gray-1);
+  transition: background 0.1s;
+}
+
+.table-row:last-child { border-bottom: none; }
+.table-row:hover { background: rgba(255,255,255,0.02); }
+.table-row .doc-name { color: var(--off-white); font-weight: 400; }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+
+.status-done { background: rgba(52, 211, 153, 0.1); color: #34D399; }
+.status-proc { background: rgba(59, 130, 246, 0.1); color: #60A5FA; }
+.status-wait { background: rgba(156, 163, 175, 0.08); color: var(--gray-1); }
+
+/* SOCIAL PROOF */
+.section { padding: 100px 48px; position: relative; }
+
+.section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--white);
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.section-title em { font-style: italic; color: var(--gold-light); }
+
+.section-sub {
+  font-size: 17px;
+  color: var(--gray-1);
+  max-width: 500px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* PAIN POINTS */
+.pain-section {
+  background: var(--navy-2);
+  border-top: 0.5px solid var(--border-subtle);
+  border-bottom: 0.5px solid var(--border-subtle);
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border-subtle);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 60px;
+}
+
+.pain-item {
+  background: var(--navy-2);
+  padding: 28px 28px;
+}
+
+.pain-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba(184, 150, 90, 0.08);
+  border: 0.5px solid rgba(184, 150, 90, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-size: 16px;
+}
+
+.pain-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.pain-desc {
+  font-size: 13px;
+  color: var(--gray-1);
+  line-height: 1.6;
+}
+
+/* FEATURES */
+.features-section { padding: 100px 48px; }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 80px;
+}
+
+.features-grid.reverse { direction: rtl; }
+.features-grid.reverse > * { direction: ltr; }
+
+.feature-visual {
+  background: var(--navy-2);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.feature-visual-inner {
+  padding: 28px;
+  min-height: 280px;
+}
+
+.feature-visual-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.ocr-demo {
+  position: relative;
+}
+
+.ocr-doc {
+  background: var(--navy-3);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'DM Sans', monospace;
+  font-size: 11px;
+  color: var(--gray-1);
+  line-height: 2;
+  margin-bottom: 16px;
+}
+
+.ocr-highlight {
+  background: rgba(184, 150, 90, 0.15);
+  border: 0.5px solid rgba(184, 150, 90, 0.4);
+  border-radius: 3px;
+  padding: 1px 4px;
+  color: var(--gold-light);
+}
+
+.ocr-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ocr-field {
+  background: var(--navy-4);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 7px;
+  padding: 10px 12px;
+}
+
+.ocr-field-label {
+  font-size: 10px;
+  color: var(--gray-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+
+.ocr-field-value {
+  font-size: 13px;
+  color: var(--white);
+  font-weight: 500;
+}
+
+.feature-content { }
+
+.feature-number {
+  font-family: var(--serif);
+  font-size: 48px;
+  color: rgba(184, 150, 90, 0.2);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.feature-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.feature-title em { font-style: italic; color: var(--gold-light); }
+
+.feature-desc {
+  font-size: 15px;
+  color: var(--gray-1);
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--gray-1);
+}
+
+.feature-list li::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(52, 211, 153, 0.1);
+  border: 0.5px solid rgba(52, 211, 153, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='6' viewBox='0 0 8 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3L3 5L7 1' stroke='%2334D399' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* PRICING */
+.pricing-section {
+  background: var(--navy-2);
+  border-top: 0.5px solid var(--border-subtle);
+  border-bottom: 0.5px solid var(--border-subtle);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 60px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pricing-card {
+  background: var(--navy);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 32px 28px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.pricing-card:hover { border-color: rgba(184,150,90,0.2); }
+
+.pricing-card.featured {
+  border-color: rgba(184, 150, 90, 0.4);
+  background: linear-gradient(135deg, rgba(184,150,90,0.04), transparent);
+}
+
+.pricing-popular {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 14px;
+  border-radius: 100px;
+}
+
+.pricing-plan {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-2);
+  margin-bottom: 12px;
+}
+
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.price-currency {
+  font-size: 18px;
+  color: var(--gray-1);
+}
+
+.price-value {
+  font-family: var(--serif);
+  font-size: 48px;
+  color: var(--white);
+  line-height: 1;
+}
+
+.price-period {
+  font-size: 14px;
+  color: var(--gray-2);
+}
+
+.pricing-desc {
+  font-size: 13px;
+  color: var(--gray-2);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.pricing-divider {
+  height: 0.5px;
+  background: var(--border-subtle);
+  margin-bottom: 20px;
+}
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--gray-1);
+}
+
+.pricing-features li::before {
+  content: '✓';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(52, 211, 153, 0.08);
+  border: 0.5px solid rgba(52, 211, 153, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 9px;
+  color: #34D399;
+  text-align: center;
+  line-height: 16px;
+}
+
+.btn-pricing {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 11px 20px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+.btn-pricing-outline {
+  background: transparent;
+  border: 0.5px solid rgba(255,255,255,0.15);
+  color: var(--off-white);
+}
+
+.btn-pricing-outline:hover { background: rgba(255,255,255,0.04); }
+
+.btn-pricing-gold {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border: none;
+  color: var(--navy);
+}
+
+.btn-pricing-gold:hover { opacity: 0.9; }
+
+/* CTA SECTION */
+.cta-section {
+  text-align: center;
+  padding: 120px 48px;
+  position: relative;
+}
+
+.cta-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(184,150,90,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  color: var(--white);
+  max-width: 700px;
+  margin: 0 auto 20px;
+  line-height: 1.1;
+}
+
+.cta-title em { font-style: italic; color: var(--gold-light); }
+
+.cta-sub {
+  font-size: 17px;
+  color: var(--gray-1);
+  max-width: 460px;
+  margin: 0 auto 48px;
+  font-weight: 300;
+}
+
+/* FOOTER */
+footer {
+  border-top: 0.5px solid var(--border-subtle);
+  padding: 48px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-mark {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--navy);
+}
+
+.footer-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+}
+
+.footer-name span { color: var(--gold-dim); }
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--gray-3);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-size: 12px;
+  color: var(--gray-3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--gray-1); }
+
+/* Divider */
+.section-divider {
+  height: 0.5px;
+  background: var(--border-subtle);
+  margin: 0 48px;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-badge { animation: fadeUp 0.5s ease both; }
+.hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+.hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+.hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+.hero-preview { animation: fadeUp 0.8s 0.4s ease both; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  nav .nav-links { display: none; }
+  .section { padding: 72px 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .features-grid { grid-template-columns: 1fr; gap: 40px; }
+  .features-grid.reverse { direction: ltr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .preview-body { grid-template-columns: 1fr; }
+  .preview-sidebar { display: none; }
+  .preview-stats { grid-template-columns: repeat(2, 1fr); }
+  .table-header, .table-row { grid-template-columns: 2fr 1fr; }
+  .table-header > *:nth-child(n+3),
+  .table-row > *:nth-child(n+3) { display: none; }
+  footer { flex-direction: column; gap: 20px; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+</style>
 </head>
 <body>
 
-<div class="card">
-    <div class="header">
-        <div class="logo"></div>
-        <h2>Calculadora de Prazos</h2>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">D</div>
+    <span class="logo-text">DOMINUS <span>AI</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#precos">Preços</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#" class="btn-ghost">Entrar</a>
+    <a href="#" class="btn-primary">Acesso antecipado →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-gold"></div>
+  <div style="position:relative;z-index:1;width:100%">
+    <div class="hero-badge">Infraestrutura jurídica com IA</div>
+    <h1>Perícia trabalhista <em>precisa</em>.<br>Sem retrabalho.</h1>
+    <p class="hero-sub">Transforme documentos trabalhistas em dados estruturados em segundos. OCR inteligente, extração automática e exportação pronta para o PJe-Calc.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary-lg">
+        Começar gratuitamente
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#como-funciona" class="btn-outline-lg">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 5.5a1.5 1.5 0 0 1 3 .5c0 1-1.5 1.5-1.5 2.5M7 11h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Ver demonstração
+      </a>
     </div>
 
-    <div class="tabs">
-        <button id="t1" class="tab-btn active" onclick="tab(1)">INTERVALO</button>
-        <button id="t2" class="tab-btn" onclick="tab(2)">PREVISÃO</button>
+    <!-- Dashboard Preview -->
+    <div class="hero-preview">
+      <div class="preview-frame">
+        <div class="preview-topbar">
+          <div class="preview-dot pd-red"></div>
+          <div class="preview-dot pd-yellow"></div>
+          <div class="preview-dot pd-green"></div>
+          <div class="preview-url">app.dominus.ai — Dashboard</div>
+        </div>
+        <div class="preview-body">
+          <div class="preview-sidebar">
+            <div class="sidebar-logo">
+              <div class="sidebar-logo-mark">D</div>
+              <span class="sidebar-logo-text">DOMINUS <span>AI</span></span>
+            </div>
+            <div class="sidebar-section">
+              <div class="sidebar-label">Principal</div>
+              <div class="sidebar-item active">
+                <div class="sidebar-dot" style="background:rgba(184,150,90,0.2)">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1" y="1" width="3.5" height="3.5" rx="1" fill="#B8965A"/><rect x="5.5" y="1" width="3.5" height="3.5" rx="1" fill="#B8965A"/><rect x="1" y="5.5" width="3.5" height="3.5" rx="1" fill="#B8965A"/><rect x="5.5" y="5.5" width="3.5" height="3.5" rx="1" fill="#B8965A"/></svg>
+                </div>
+                Dashboard
+              </div>
+              <div class="sidebar-item">
+                <div class="sidebar-dot" style="background:rgba(255,255,255,0.05)">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" stroke="#6B7280" stroke-width="1" fill="none"/></svg>
+                </div>
+                Processos
+              </div>
+              <div class="sidebar-item">
+                <div class="sidebar-dot" style="background:rgba(255,255,255,0.05)">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 8.5L4 5.5l2 2 3-4" stroke="#6B7280" stroke-width="1" stroke-linecap="round" fill="none"/></svg>
+                </div>
+                Documentos
+              </div>
+              <div class="sidebar-item">
+                <div class="sidebar-dot" style="background:rgba(255,255,255,0.05)">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="4" r="2.5" stroke="#6B7280" stroke-width="1" fill="none"/><path d="M1.5 9c0-1.5 1.5-2.5 3.5-2.5s3.5 1 3.5 2.5" stroke="#6B7280" stroke-width="1" stroke-linecap="round" fill="none"/></svg>
+                </div>
+                Funcionários
+              </div>
+            </div>
+          </div>
+          <div class="preview-main">
+            <div class="preview-header">
+              <div class="preview-title">Visão geral <span>— Junho 2025</span></div>
+              <div style="display:flex;gap:8px">
+                <div style="background:var(--navy-3);border:0.5px solid var(--border-subtle);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--gray-2)">Exportar</div>
+                <div style="background:rgba(184,150,90,0.15);border:0.5px solid rgba(184,150,90,0.3);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--gold-light)">+ Upload</div>
+              </div>
+            </div>
+            <div class="preview-stats">
+              <div class="stat-card">
+                <div class="stat-label">Documentos</div>
+                <div class="stat-value">247</div>
+                <div class="stat-delta">↑ 12 este mês</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Processados</div>
+                <div class="stat-value">239</div>
+                <div class="stat-delta">96.8% taxa OCR</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Funcionários</div>
+                <div class="stat-value">38</div>
+                <div class="stat-delta">↑ 5 novos</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Inconsistências</div>
+                <div class="stat-value" style="color:#FBBF24">7</div>
+                <div class="stat-delta" style="color:#F87171">requer revisão</div>
+              </div>
+            </div>
+            <div class="preview-table">
+              <div class="table-header">
+                <span>Documento</span>
+                <span>Tipo</span>
+                <span>Funcionário</span>
+                <span>Status</span>
+              </div>
+              <div class="table-row">
+                <span class="doc-name">contracheque_maio_2025.pdf</span>
+                <span>Contracheque</span>
+                <span>J. Silva</span>
+                <span><span class="status-badge status-done">✓ Processado</span></span>
+              </div>
+              <div class="table-row">
+                <span class="doc-name">ponto_abril_2025.pdf</span>
+                <span>Cartão ponto</span>
+                <span>M. Santos</span>
+                <span><span class="status-badge status-proc">● Processando</span></span>
+              </div>
+              <div class="table-row">
+                <span class="doc-name">TRCT_rescisao.pdf</span>
+                <span>TRCT</span>
+                <span>A. Costa</span>
+                <span><span class="status-badge status-done">✓ Processado</span></span>
+              </div>
+              <div class="table-row">
+                <span class="doc-name">folha_pgto_jun_2025.pdf</span>
+                <span>Folha pagto.</span>
+                <span>Múltiplos</span>
+                <span><span class="status-badge status-wait">○ Aguardando</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="form">
-        <div id="p1">
-            <div class="group"><label>Data Inicial</label><input type="date" id="s1"></div>
-            <div class="group"><label>Data Final</label><input type="date" id="e1"></div>
-            <button class="btn-main" onclick="calc1()">Calcular Dias Úteis</button>
-        </div>
-
-        <div id="p2" style="display:none">
-            <div class="group"><label>Data de Início</label><input type="date" id="s2"></div>
-            <div class="group"><label>Prazo (Dias Úteis)</label><input type="number" id="q2" placeholder="Ex: 15"></div>
-            <button class="btn-main" onclick="calc2()">Gerar Data de Entrega</button>
-        </div>
-
-        <div id="result-area">
-            <span id="res-h" style="font-size: 0.7rem; color: #64748b; font-weight: 700;"></span>
-            <span id="res-v" class="res-val"></span>
-            <button class="btn-copy" id="copyBtn" onclick="copyRes()">📋 Copiar para WhatsApp</button>
-        </div>
+<!-- PAIN POINTS -->
+<section class="section pain-section" id="funcionalidades">
+  <div style="text-align:center;margin-bottom:0">
+    <div class="section-label">O problema que resolvemos</div>
+    <h2 class="section-title" style="margin:0 auto 16px;text-align:center">O mercado desperdiça<br><em>horas com operacional</em></h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center">Toda perícia trabalhista começa com pilhas de documentos desorganizados. Dominus AI resolve isso.</p>
+  </div>
+  <div class="pain-grid">
+    <div class="pain-item">
+      <div class="pain-icon">📄</div>
+      <div class="pain-title">PDFs desorganizados</div>
+      <div class="pain-desc">Documentos escaneados, rotacionados, com baixa qualidade — impossíveis de ler manualmente com eficiência.</div>
     </div>
-    <div class="footer">Joinville-SC | Madville GMAD</div>
-</div>
+    <div class="pain-item">
+      <div class="pain-icon">⌨️</div>
+      <div class="pain-title">Digitação manual</div>
+      <div class="pain-desc">Horas digitando rubricas, salários e datas de contracheques e cartões ponto em planilhas.</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">⚠️</div>
+      <div class="pain-title">Erros de cálculo</div>
+      <div class="pain-desc">Um dado errado contamina toda a perícia. Sem validação automática, o erro só aparece no laudo.</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">🔄</div>
+      <div class="pain-title">Retrabalho constante</div>
+      <div class="pain-desc">Documentos revisados, corrigidos, reprocessados. Ciclo interminável que consome o tempo do perito.</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">🗂️</div>
+      <div class="pain-title">Organização precária</div>
+      <div class="pain-desc">Documentos espalhados, nomenclaturas inconsistentes, impossível localizar rapidamente o que precisa.</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">📊</div>
+      <div class="pain-title">PJe-Calc manual</div>
+      <div class="pain-desc">Formatação trabalhosa para exportar ao PJe-Calc. Cada campo preenchido à mão, propenso a erros.</div>
+    </div>
+  </div>
+</section>
 
-<script>
-    const FERIADOS = ["2026-01-01", "2026-02-16", "2026-02-17", "2026-03-09", "2026-04-03", "2026-04-21", "2026-05-01", "2026-06-04", "2026-09-07", "2026-10-12", "2026-11-02", "2026-11-15", "2026-11-20", "2026-12-25"];
+<!-- FEATURE 1: OCR -->
+<section class="section features-section" id="como-funciona">
+  <div class="features-grid">
+    <div class="feature-visual">
+      <div class="feature-visual-inner">
+        <div class="feature-visual-label">OCR Inteligente em ação</div>
+        <div class="ocr-demo">
+          <div class="ocr-doc">
+            DEMONSTRATIVO DE PAGAMENTO — MAIO/2025<br>
+            Funcionário: <span class="ocr-highlight">João Carlos Silva</span><br>
+            CPF: <span class="ocr-highlight">123.456.789-00</span><br>
+            Cargo: Analista Sênior — Admissão: <span class="ocr-highlight">01/03/2018</span><br>
+            <br>
+            Salário Base............. <span class="ocr-highlight">R$ 4.800,00</span><br>
+            H.E 50%.................. <span class="ocr-highlight">R$ 360,00</span><br>
+            Adic. Noturno............ <span class="ocr-highlight">R$ 192,00</span><br>
+            INSS..................... (R$ 528,00)<br>
+            FGTS..................... <span class="ocr-highlight">R$ 411,84</span>
+          </div>
+          <div class="ocr-result">
+            <div class="ocr-field">
+              <div class="ocr-field-label">Salário base</div>
+              <div class="ocr-field-value">R$ 4.800,00</div>
+            </div>
+            <div class="ocr-field">
+              <div class="ocr-field-label">H.E. extraídas</div>
+              <div class="ocr-field-value">R$ 360,00</div>
+            </div>
+            <div class="ocr-field">
+              <div class="ocr-field-label">Adic. noturno</div>
+              <div class="ocr-field-value">R$ 192,00</div>
+            </div>
+            <div class="ocr-field">
+              <div class="ocr-field-label">FGTS mensal</div>
+              <div class="ocr-field-value">R$ 411,84</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-content">
+      <div class="feature-number">01</div>
+      <h3 class="feature-title">OCR que entende <em>direito trabalhista</em></h3>
+      <p class="feature-desc">Não é apenas reconhecimento de texto — é compreensão semântica. O sistema identifica rubricas, eventos e reflexos com contexto jurídico.</p>
+      <ul class="feature-list">
+        <li>Leitura de PDFs escaneados, fotos e imagens</li>
+        <li>Reconhecimento de rubricas e códigos</li>
+        <li>Extração de datas, salários e adicionais</li>
+        <li>Score de confiança por campo extraído</li>
+        <li>Revisão manual inteligente para baixa confiança</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-    function tab(n) {
-        document.getElementById('p1').style.display = n === 1 ? 'block' : 'none';
-        document.getElementById('p2').style.display = n === 2 ? 'block' : 'none';
-        document.getElementById('t1').classList.toggle('active', n === 1);
-        document.getElementById('t2').classList.toggle('active', n === 2);
-        document.getElementById('result-area').style.display = 'none';
-    }
+<div class="section-divider"></div>
 
-    function isU(d) {
-        const day = d.getDay();
-        if (day === 0 || day === 6) return false;
-        const s = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-        return !FERIADOS.includes(s);
-    }
+<!-- FEATURE 2: Organização -->
+<section class="section features-section">
+  <div class="features-grid reverse">
+    <div class="feature-visual">
+      <div class="feature-visual-inner">
+        <div class="feature-visual-label">Organização automática por funcionário</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:var(--navy-3);border:0.5px solid var(--border-subtle);border-radius:9px;padding:14px 16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:13px;font-weight:500;color:var(--white)">João Carlos Silva</span>
+              <span style="font-size:11px;color:var(--gold);background:rgba(184,150,90,0.1);padding:2px 8px;border-radius:4px">CPF: 123.456-00</span>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font-size:11px;color:var(--gray-1);background:var(--navy-4);padding:3px 8px;border-radius:4px;border:0.5px solid var(--border-subtle)">12 contracheques</span>
+              <span style="font-size:11px;color:var(--gray-1);background:var(--navy-4);padding:3px 8px;border-radius:4px;border:0.5px solid var(--border-subtle)">12 cartões ponto</span>
+              <span style="font-size:11px;color:var(--gray-1);background:var(--navy-4);padding:3px 8px;border-radius:4px;border:0.5px solid var(--border-subtle)">1 TRCT</span>
+            </div>
+          </div>
+          <div style="background:var(--navy-3);border:0.5px solid var(--border-subtle);border-radius:9px;padding:14px 16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:13px;font-weight:500;color:var(--white)">Maria Santos</span>
+              <span style="font-size:11px;color:var(--gold);background:rgba(184,150,90,0.1);padding:2px 8px;border-radius:4px">CPF: 987.654-11</span>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font-size:11px;color:var(--gray-1);background:var(--navy-4);padding:3px 8px;border-radius:4px;border:0.5px solid var(--border-subtle)">8 contracheques</span>
+              <span style="font-size:11px;color:#FBBF24;background:rgba(251,191,36,0.08);padding:3px 8px;border-radius:4px;border:0.5px solid rgba(251,191,36,0.2)">⚠ 3 inconsistências</span>
+            </div>
+          </div>
+          <div style="background:var(--navy-3);border:0.5px solid rgba(52,211,153,0.15);border-radius:9px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:12px;color:#34D399">✓ 38 funcionários estruturados automaticamente</span>
+            <span style="font-size:11px;color:var(--gray-2)">2 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-content">
+      <div class="feature-number">02</div>
+      <h3 class="feature-title">Organização que <em>acontece sozinha</em></h3>
+      <p class="feature-desc">Faça upload de qualquer volume de documentos. O sistema reconhece funcionários, separa por competência e estrutura tudo automaticamente.</p>
+      <ul class="feature-list">
+        <li>Identificação automática de funcionários por CPF</li>
+        <li>Agrupamento por competência mensal</li>
+        <li>Categorização por tipo de documento</li>
+        <li>Detecção de documentos duplicados</li>
+        <li>Alertas de inconsistências entre documentos</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-    function parse(v) {
-        const p = v.split('-');
-        return new Date(p[0], p[1]-1, p[2]);
-    }
+<div class="section-divider"></div>
 
-    function calc1() {
-        const s = parse(document.getElementById('s1').value);
-        const e = parse(document.getElementById('e1').value);
-        if(isNaN(s) || isNaN(e)) return;
-        let c = 0, curr = new Date(s);
-        while(curr <= e) { if(isU(curr)) c++; curr.setDate(curr.getDate()+1); }
-        show("Diferença encontrada:", c + " dias úteis");
-    }
+<!-- FEATURE 3: Export -->
+<section class="section features-section">
+  <div class="features-grid">
+    <div class="feature-visual">
+      <div class="feature-visual-inner">
+        <div class="feature-visual-label">Exportação pronta para cálculo</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:var(--navy-3);border:0.5px solid var(--border-subtle);border-radius:9px;padding:16px">
+            <div style="font-size:12px;color:var(--gray-2);margin-bottom:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em">Formatos disponíveis</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--navy-4);border-radius:7px;border:0.5px solid var(--border-subtle)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:16px">📊</span>
+                  <div>
+                    <div style="font-size:13px;color:var(--white);font-weight:500">Excel (.xlsx)</div>
+                    <div style="font-size:11px;color:var(--gray-2)">Estruturado por competência</div>
+                  </div>
+                </div>
+                <span style="font-size:11px;color:#34D399;background:rgba(52,211,153,0.08);padding:3px 8px;border-radius:4px">Disponível</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--navy-4);border-radius:7px;border:0.5px solid var(--border-subtle)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:16px">📋</span>
+                  <div>
+                    <div style="font-size:13px;color:var(--white);font-weight:500">CSV padrão</div>
+                    <div style="font-size:11px;color:var(--gray-2)">Importável em qualquer sistema</div>
+                  </div>
+                </div>
+                <span style="font-size:11px;color:#34D399;background:rgba(52,211,153,0.08);padding:3px 8px;border-radius:4px">Disponível</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--navy-4);border-radius:7px;border:0.5px solid rgba(184,150,90,0.2)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:16px">⚖️</span>
+                  <div>
+                    <div style="font-size:13px;color:var(--white);font-weight:500">PJe-Calc</div>
+                    <div style="font-size:11px;color:var(--gray-2)">Estrutura nativa do sistema</div>
+                  </div>
+                </div>
+                <span style="font-size:11px;color:var(--gold);background:rgba(184,150,90,0.1);padding:3px 8px;border-radius:4px">Fase 3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-content">
+      <div class="feature-number">03</div>
+      <h3 class="feature-title">Exportação <em>pronta para o cálculo</em></h3>
+      <p class="feature-desc">Dados extraídos e estruturados, prontos para uso imediato em qualquer ferramenta de cálculo trabalhista. Zero redigitação.</p>
+      <ul class="feature-list">
+        <li>Excel estruturado por funcionário e competência</li>
+        <li>CSV compatível com todas as plataformas</li>
+        <li>Estrutura PJe-Calc nativa em breve</li>
+        <li>Histórico completo de exportações</li>
+        <li>Relatório de inconsistências junto ao arquivo</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-    function calc2() {
-        const s = parse(document.getElementById('s2').value);
-        const q = parseInt(document.getElementById('q2').value);
-        if(isNaN(s) || isNaN(q)) return;
-        let c = isU(s) ? 1 : 0, curr = new Date(s);
-        while(c < q) { curr.setDate(curr.getDate()+1); if(isU(curr)) c++; }
-        const res = curr.toLocaleDateString('pt-BR', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
-        show("Data de entrega prevista:", res.charAt(0).toUpperCase() + res.slice(1));
-    }
+<!-- PRICING -->
+<section class="section pricing-section" id="precos">
+  <div style="text-align:center">
+    <div class="section-label">Planos simples e justos</div>
+    <h2 class="section-title" style="margin:0 auto 16px;text-align:center">Comece <em>gratuitamente</em>.<br>Escale quando precisar.</h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center">Sem surpresas. Cancele quando quiser.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-plan">Gratuito</div>
+      <div class="pricing-price">
+        <span class="price-currency">R$</span>
+        <span class="price-value">0</span>
+        <span class="price-period">/mês</span>
+      </div>
+      <div class="pricing-desc">Para experimentar e validar a plataforma</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>20 documentos por mês</li>
+        <li>OCR básico (PDF e imagem)</li>
+        <li>Exportação CSV</li>
+        <li>1 usuário</li>
+        <li>Histórico 30 dias</li>
+      </ul>
+      <a href="#" class="btn-pricing btn-pricing-outline">Começar grátis</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-popular">Mais popular</div>
+      <div class="pricing-plan">Profissional</div>
+      <div class="pricing-price">
+        <span class="price-currency">R$</span>
+        <span class="price-value">297</span>
+        <span class="price-period">/mês</span>
+      </div>
+      <div class="pricing-desc">Para peritos e advogados trabalhistas</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>500 documentos por mês</li>
+        <li>OCR com IA semântica avançada</li>
+        <li>Exportação Excel + CSV</li>
+        <li>3 usuários</li>
+        <li>Histórico ilimitado</li>
+        <li>Detector de inconsistências</li>
+        <li>Suporte prioritário</li>
+      </ul>
+      <a href="#" class="btn-pricing btn-pricing-gold">Assinar agora</a>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-plan">Escritório</div>
+      <div class="pricing-price">
+        <span class="price-currency">R$</span>
+        <span class="price-value">897</span>
+        <span class="price-period">/mês</span>
+      </div>
+      <div class="pricing-desc">Para escritórios e equipes maiores</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Documentos ilimitados</li>
+        <li>IA de auditoria preventiva</li>
+        <li>Exportação + PJe-Calc (Fase 3)</li>
+        <li>Usuários ilimitados</li>
+        <li>Histórico ilimitado</li>
+        <li>Multiprocessos e GED</li>
+        <li>API de integração</li>
+        <li>Onboarding dedicado</li>
+      </ul>
+      <a href="#" class="btn-pricing btn-pricing-outline">Falar com vendas</a>
+    </div>
+  </div>
+</section>
 
-    function show(h, v) {
-        document.getElementById('res-h').innerText = h.toUpperCase();
-        document.getElementById('res-v').innerText = v;
-        document.getElementById('result-area').style.display = 'block';
-    }
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div style="position:relative;z-index:1">
+    <div class="section-label">Pronto para começar?</div>
+    <h2 class="cta-title">Sua próxima perícia começa <em>em segundos</em>.</h2>
+    <p class="cta-sub">Faça upload dos documentos. A IA estrutura tudo. Você foca no que importa: o cálculo.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
+      <a href="#" class="btn-primary-lg">
+        Criar conta gratuita
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <p style="margin-top:20px;font-size:13px;color:var(--gray-3)">Sem cartão de crédito · Acesso imediato · Cancele quando quiser</p>
+  </div>
+</section>
 
-    function copyRes() {
-        const h = document.getElementById('res-h').innerText;
-        const v = document.getElementById('res-v').innerText;
-        const text = `*Madville GMAD*\n${h}: *${v}*`;
-        navigator.clipboard.writeText(text);
-        const btn = document.getElementById('copyBtn');
-        btn.innerText = "✅ COPIADO!";
-        setTimeout(() => btn.innerText = "📋 Copiar para WhatsApp", 2000);
-    }
-</script>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-mark">D</div>
+    <span class="footer-name">DOMINUS <span>AI</span></span>
+  </div>
+  <div class="footer-links">
+    <a href="#">Termos de uso</a>
+    <a href="#">Privacidade</a>
+    <a href="#">Documentação</a>
+    <a href="#">Suporte</a>
+    <a href="#">Status</a>
+  </div>
+  <div class="footer-copy">© 2025 Dominus AI. Todos os direitos reservados.</div>
+</footer>
+
 </body>
 </html>
